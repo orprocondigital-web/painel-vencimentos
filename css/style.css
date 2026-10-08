@@ -1,0 +1,322 @@
+/* =========================================
+   Painel de Vencimentos — estilos próprios
+   Tema claro/escuro via variáveis CSS.
+   A classe .dark no <html> troca o tema.
+   ========================================= */
+
+/* ---------- Variáveis: tema claro ---------- */
+:root {
+  --bg: #f1f5f9;
+  --superficie: #ffffff;
+  --superficie-2: #f8fafc;
+  --borda: #e2e8f0;
+  --texto: #0f172a;
+  --suave: #64748b;
+  --primaria: #2563eb;
+  --primaria-2: #4f46e5;
+  --sombra: 0 1px 2px rgba(15, 23, 42, .05), 0 4px 12px rgba(15, 23, 42, .04);
+  --sombra-hover: 0 10px 25px rgba(15, 23, 42, .10);
+
+  /* status: cor do texto / fundo suave */
+  --vencido: #b91c1c;  --vencido-bg: #fee2e2;
+  --s7: #dc2626;       --s7-bg: #ffe4e6;
+  --s15: #d97706;      --s15-bg: #fef3c7;
+  --s30: #ca8a04;      --s30-bg: #fef9c3;
+  --ok: #059669;       --ok-bg: #d1fae5;
+}
+
+/* ---------- Variáveis: tema escuro ---------- */
+.dark {
+  --bg: #0b1120;
+  --superficie: #131c2e;
+  --superficie-2: #0f172a;
+  --borda: #1e293b;
+  --texto: #e2e8f0;
+  --suave: #94a3b8;
+  --primaria: #60a5fa;
+  --primaria-2: #818cf8;
+  --sombra: 0 1px 2px rgba(0, 0, 0, .4);
+  --sombra-hover: 0 10px 25px rgba(0, 0, 0, .5);
+
+  --vencido: #f87171;  --vencido-bg: rgba(239, 68, 68, .15);
+  --s7: #fb7185;       --s7-bg: rgba(244, 63, 94, .15);
+  --s15: #fbbf24;      --s15-bg: rgba(245, 158, 11, .15);
+  --s30: #facc15;      --s30-bg: rgba(234, 179, 8, .13);
+  --ok: #34d399;       --ok-bg: rgba(16, 185, 129, .15);
+}
+
+/* ---------- Base ---------- */
+body {
+  background: var(--bg);
+  color: var(--texto);
+  transition: background-color .3s ease, color .3s ease;
+}
+.texto-suave { color: var(--suave); }
+
+/* ---------- Cabeçalho ---------- */
+.topo {
+  background: color-mix(in srgb, var(--superficie) 85%, transparent);
+  backdrop-filter: blur(10px);
+  border-bottom: 1px solid var(--borda);
+}
+.logo {
+  width: 2.25rem; height: 2.25rem;
+  border-radius: .65rem;
+  display: grid; place-items: center;
+  color: #fff;
+  background: linear-gradient(135deg, var(--primaria), var(--primaria-2));
+  box-shadow: 0 4px 12px rgba(37, 99, 235, .35);
+}
+
+/* ---------- Botão de tema ---------- */
+.btn-tema {
+  width: 2.5rem; height: 2.5rem;
+  border-radius: 999px;
+  display: grid; place-items: center;
+  color: var(--texto);
+  background: var(--superficie-2);
+  border: 1px solid var(--borda);
+  transition: transform .2s ease, background-color .2s;
+}
+.btn-tema:hover { transform: rotate(15deg) scale(1.05); }
+.btn-tema svg { grid-area: 1 / 1; transition: opacity .25s, transform .35s; }
+.icone-sol { opacity: 0; transform: rotate(-90deg) scale(.5); }
+.icone-lua { opacity: 1; }
+.dark .icone-sol { opacity: 1; transform: none; color: #fbbf24; }
+.dark .icone-lua { opacity: 0; transform: rotate(90deg) scale(.5); }
+
+/* ---------- Botões de ação ---------- */
+.btn {
+  height: 2.5rem;
+  display: inline-flex; align-items: center; gap: .45rem;
+  padding: 0 .9rem;
+  border-radius: .7rem;
+  font-size: .85rem; font-weight: 600;
+  border: 1px solid transparent;
+  transition: transform .15s, box-shadow .2s, opacity .2s, background-color .2s;
+}
+.btn:hover:not(:disabled) { transform: translateY(-1px); }
+.btn:disabled { opacity: .4; cursor: not-allowed; }
+.btn-primario {
+  color: #fff;
+  background: linear-gradient(135deg, var(--primaria), var(--primaria-2));
+  box-shadow: 0 4px 10px rgba(37, 99, 235, .3);
+}
+.btn-perigo {
+  color: var(--vencido);
+  background: var(--vencido-bg);
+  border-color: color-mix(in srgb, var(--vencido) 25%, transparent);
+}
+
+/* ---------- Faixa de destaque ---------- */
+.destaque {
+  display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; gap: 1.5rem;
+  padding: 1.5rem 1.75rem;
+  border-radius: 1rem;
+  color: #fff;
+  background:
+    radial-gradient(circle at 90% 10%, rgba(255,255,255,.18), transparent 40%),
+    linear-gradient(135deg, #1e3a8a, #4338ca 60%, #6d28d9);
+  box-shadow: 0 10px 30px rgba(67, 56, 202, .25);
+}
+.destaque.alerta {
+  background:
+    radial-gradient(circle at 90% 10%, rgba(255,255,255,.18), transparent 40%),
+    linear-gradient(135deg, #991b1b, #c2410c);
+  box-shadow: 0 10px 30px rgba(194, 65, 12, .25);
+}
+
+/* ---------- Painéis genéricos ---------- */
+.painel {
+  background: var(--superficie);
+  border: 1px solid var(--borda);
+  border-radius: 1rem;
+  box-shadow: var(--sombra);
+  transition: background-color .3s, border-color .3s;
+}
+
+/* ---------- Cards de resumo ---------- */
+.card-resumo {
+  --cor: var(--primaria); --cor-bg: var(--superficie-2);
+  display: flex; flex-direction: column; align-items: flex-start; gap: .5rem;
+  background: var(--superficie);
+  border: 1px solid var(--borda);
+  border-radius: 1rem;
+  padding: 1rem 1.1rem;
+  box-shadow: var(--sombra);
+  text-align: left;
+  cursor: pointer;
+  transition: transform .2s ease, box-shadow .2s ease, border-color .2s, background-color .3s;
+}
+.card-resumo:hover { transform: translateY(-3px); box-shadow: var(--sombra-hover); }
+.card-resumo.ativo { border-color: var(--cor); box-shadow: 0 0 0 3px var(--cor-bg), var(--sombra-hover); }
+
+.cor-vencido { --cor: var(--vencido); --cor-bg: var(--vencido-bg); }
+.cor-7       { --cor: var(--s7);      --cor-bg: var(--s7-bg); }
+.cor-15      { --cor: var(--s15);     --cor-bg: var(--s15-bg); }
+.cor-30      { --cor: var(--s30);     --cor-bg: var(--s30-bg); }
+.cor-ok      { --cor: var(--ok);      --cor-bg: var(--ok-bg); }
+
+.icone-card {
+  width: 2.25rem; height: 2.25rem; border-radius: .65rem;
+  display: grid; place-items: center;
+  color: var(--cor); background: var(--cor-bg);
+}
+.numero { font-size: 2rem; font-weight: 800; line-height: 1; color: var(--cor); }
+.rotulo-card { font-size: .8rem; font-weight: 600; color: var(--suave); }
+
+.barra { width: 100%; height: .3rem; border-radius: 999px; background: var(--superficie-2); overflow: hidden; }
+.barra > span { display: block; height: 100%; width: 0; border-radius: inherit; background: var(--cor); transition: width .6s ease; }
+
+/* ---------- Campos ---------- */
+.rotulo { display: block; font-size: .75rem; font-weight: 600; color: var(--suave); margin-bottom: .35rem; }
+.campo {
+  width: 100%;
+  height: 2.6rem;
+  border: 1px solid var(--borda);
+  border-radius: .65rem;
+  padding: 0 .85rem;
+  font-size: .875rem;
+  color: var(--texto);
+  background: var(--superficie-2);
+  outline: none;
+  transition: border-color .15s, box-shadow .15s, background-color .3s;
+}
+.campo.pl-9 { padding-left: 2.25rem; }
+.campo::placeholder { color: var(--suave); }
+.campo:focus { border-color: var(--primaria); box-shadow: 0 0 0 3px color-mix(in srgb, var(--primaria) 25%, transparent); }
+.campo option { background: var(--superficie); color: var(--texto); }
+
+/* ---------- Abas (controle segmentado) ---------- */
+.segmentado {
+  display: inline-flex; gap: .25rem; padding: .25rem;
+  background: var(--superficie);
+  border: 1px solid var(--borda);
+  border-radius: .8rem;
+}
+.aba {
+  padding: .45rem 1rem;
+  font-size: .85rem; font-weight: 600;
+  color: var(--suave);
+  border-radius: .6rem;
+  transition: all .2s;
+}
+.aba:hover { color: var(--texto); }
+.aba-ativa {
+  color: #fff;
+  background: linear-gradient(135deg, var(--primaria), var(--primaria-2));
+  box-shadow: 0 4px 10px rgba(37, 99, 235, .3);
+}
+.link { color: var(--primaria); font-weight: 600; }
+.link:hover { text-decoration: underline; }
+
+/* ---------- Tabela ---------- */
+thead tr { background: var(--superficie-2); }
+.th {
+  padding: .8rem 1rem;
+  text-align: left;
+  font-size: .7rem; font-weight: 700; letter-spacing: .05em; text-transform: uppercase;
+  color: var(--suave);
+  white-space: nowrap;
+  border-bottom: 1px solid var(--borda);
+}
+tbody tr { border-bottom: 1px solid var(--borda); transition: background-color .15s; }
+tbody tr:last-child { border-bottom: 0; }
+tbody tr:hover { background: var(--superficie-2); }
+.td { padding: .8rem 1rem; white-space: nowrap; vertical-align: middle; }
+.linha-vencida { box-shadow: inset 3px 0 0 var(--vencido); }
+
+/* Avatar com iniciais */
+.avatar {
+  width: 2.25rem; height: 2.25rem; flex-shrink: 0;
+  border-radius: .65rem;
+  display: grid; place-items: center;
+  font-size: .75rem; font-weight: 700; color: #fff;
+}
+
+/* Chip de tipo de documento */
+.chip {
+  display: inline-flex; align-items: center; gap: .4rem;
+  padding: .25rem .6rem;
+  border-radius: .5rem;
+  font-size: .78rem; font-weight: 500;
+  background: var(--superficie-2);
+  border: 1px solid var(--borda);
+}
+
+/* Barra de prazo */
+.prazo { display: flex; align-items: center; gap: .6rem; min-width: 9rem; }
+.prazo-barra { flex: 1; height: .35rem; border-radius: 999px; background: var(--superficie-2); overflow: hidden; }
+.prazo-barra > span { display: block; height: 100%; border-radius: inherit; }
+.prazo-texto { font-weight: 700; font-size: .8rem; min-width: 4.5rem; text-align: right; }
+
+/* ---------- Selos de status ---------- */
+.selo {
+  display: inline-flex; align-items: center; gap: .35rem;
+  padding: .2rem .65rem;
+  border-radius: 999px;
+  font-size: .72rem; font-weight: 700;
+  white-space: nowrap;
+}
+.selo::before { content: ""; width: .45rem; height: .45rem; border-radius: 50%; background: currentColor; }
+.selo-vencido { background: var(--vencido-bg); color: var(--vencido); }
+.selo-vencido::before { animation: pulso 1.4s infinite; }
+.selo-7  { background: var(--s7-bg);  color: var(--s7); }
+.selo-15 { background: var(--s15-bg); color: var(--s15); }
+.selo-30 { background: var(--s30-bg); color: var(--s30); }
+.selo-ok { background: var(--ok-bg);  color: var(--ok); }
+
+.txt-vencido { color: var(--vencido); } .bg-st-vencido { background: var(--vencido); }
+.txt-7  { color: var(--s7); }  .bg-st-7  { background: var(--s7); }
+.txt-15 { color: var(--s15); } .bg-st-15 { background: var(--s15); }
+.txt-30 { color: var(--s30); } .bg-st-30 { background: var(--s30); }
+.txt-ok { color: var(--ok); }  .bg-st-ok { background: var(--ok); }
+
+@keyframes pulso {
+  0%, 100% { opacity: 1; transform: scale(1); }
+  50% { opacity: .4; transform: scale(1.4); }
+}
+
+/* ---------- Cards por cliente ---------- */
+.card-cliente {
+  position: relative; overflow: hidden;
+  background: var(--superficie);
+  border: 1px solid var(--borda);
+  border-radius: 1rem;
+  padding: 1.1rem 1.25rem;
+  box-shadow: var(--sombra);
+  transition: transform .2s, box-shadow .2s, background-color .3s;
+  animation: surgir .35s ease both;
+}
+.card-cliente:hover { transform: translateY(-3px); box-shadow: var(--sombra-hover); }
+.card-cliente::before {
+  content: ""; position: absolute; inset: 0 0 auto 0; height: 4px;
+  background: var(--ok);
+}
+.card-cliente.st-vencido::before { background: var(--vencido); }
+.card-cliente.st-7::before  { background: var(--s7); }
+.card-cliente.st-15::before { background: var(--s15); }
+.card-cliente.st-30::before { background: var(--s30); }
+
+.item-doc {
+  display: flex; align-items: center; justify-content: space-between; gap: .5rem;
+  padding: .55rem .7rem;
+  border-radius: .6rem;
+  background: var(--superficie-2);
+  font-size: .85rem;
+}
+
+/* ---------- Vazio ---------- */
+.vazio { text-align: center; color: var(--suave); padding: 3rem 1rem; }
+
+/* ---------- Animações ---------- */
+@keyframes surgir {
+  from { opacity: 0; transform: translateY(6px); }
+  to   { opacity: 1; transform: none; }
+}
+tbody tr { animation: surgir .3s ease both; }
+
+/* Respeita quem prefere menos movimento */
+@media (prefers-reduced-motion: reduce) {
+  *, *::before { animation: none !important; transition: none !important; }
+}
